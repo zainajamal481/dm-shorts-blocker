@@ -1,0 +1,80 @@
+name: Update README stats
+
+on:
+  schedule:
+    - cron: '0 2 * * 0'  # Every Sunday at 2 AM
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Get repository stats
+        id: stats
+        run: |
+          # Get stars count
+          STARS=$(curl -s "https://api.github.com/repos/${{ github.repository }}" | jq -r '.stargazers_count')
+          echo "stars=$STARS" >> $GITHUB_OUTPUT
+          
+          # Get forks count
+          FORKS=$(curl -s "https://api.github.com/repos/${{ github.repository }}" | jq -r '.forks_count')
+          echo "forks=$FORKS" >> $GITHUB_OUTPUT
+          
+          # Get issues count
+          ISSUES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/issues?state=open" | jq 'length')
+          echo "issues=$ISSUES" >> $GITHUB_OUTPUT
+          
+          # Get pull requests count
+          PRS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/pulls?state=open" | jq 'length')
+          echo "prs=$PRS" >> $GITHUB_OUTPUT
+          
+          # Get last commit date
+          LAST_COMMIT=$(curl -s "https://api.github.com/repos/${{ github.repository }}/commits?per_page=1" | jq -r '.[0].commit.author.date')
+          echo "last_commit=$LAST_COMMIT" >> $GITHUB_OUTPUT
+
+      - name: Update README with stats
+        run: |
+          # Create stats section
+          STATS_SECTION="## 📊 Project Stats
+          
+          ![GitHub stars](https://img.shields.io/github/stars/${{ github.repository }}?style=social)
+          ![GitHub forks](https://img.shields.io/github/forks/${{ github.repository }}?style=social)
+          ![GitHub issues](https://img.shields.io/github/issues/${{ github.repository }})
+          ![GitHub pull requests](https://img.shields.io/github/issues-pr/${{ github.repository }})
+          ![GitHub last commit](https://img.shields.io/github/last-commit/${{ github.repository }})
+          ![GitHub license](https://img.shields.io/github/license/${{ github.repository }})
+          
+          - ⭐ **${{ steps.stats.outputs.stars }}** stars
+          - 🔀 **${{ steps.stats.outputs.forks }}** forks
+          - 🐛 **${{ steps.stats.outputs.issues }}** open issues
+          - 🔄 **${{ steps.stats.outputs.prs }}** open pull requests
+          - 📅 Last updated: **${{ steps.stats.outputs.last_commit }}**
+          
+          ---"
+          
+          # Check if stats section already exists in README
+          if grep -q "## 📊 Project Stats" README.md; then
+            # Replace existing stats section
+            sed -i '/## 📊 Project Stats/,/^---$/c\'"$STATS_SECTION" README.md
+          else
+            # Add stats section after the first heading
+            sed -i '1a\'"$STATS_SECTION" README.md
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "docs: update project statistics" || exit 0
+          git push

@@ -1,0 +1,46 @@
+/* YouTube Shorts Blocker - Content Styles */
+
+/* Скрываем заблокированные элементы */
+[data-shorts-blocked="true"] {
+  display: none !important;
+}
+
+/* Скрываем блоки с Shorts */
+ytd-rich-section-renderer:has(span:contains("Shorts")),
+ytd-rich-section-renderer:has(a[href*="/shorts/"]),
+ytd-rich-section-renderer:has(span:contains("Короткие видео")),
+ytd-rich-section-renderer:has(span:contains("Short videos")) {
+  display: none !important;
+}
+
+/* Скрываем отдельные видео Shorts */
+ytd-rich-item-renderer:has(a[href*="/shorts/"]) {
+  display: none !important;
+}
+
+/* Скрываем кнопку Shorts в навигации */
+ytd-guide-entry-renderer:has(a[href*="/shorts/"]),
+ytd-mini-guide-entry-renderer:has(a[href*="/shorts/"]) {
+  display: none !important;
+}
+
+/* Скрываем Shorts в рекомендациях */
+ytd-rich-grid-row:has(ytd-rich-item-renderer a[href*="/shorts/"]) {
+  display: none !important;
+}
+
+/* Анимация для уведомлений */
+@keyframes slideIn {
+  from { 
+    transform: translateX(100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+
+.shorts-blocker-notification {
+  animation: slideIn 0.3s ease-out;
+}

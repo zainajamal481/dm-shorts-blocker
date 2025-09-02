@@ -1,0 +1,118 @@
+# GitHub Labels Configuration
+
+# Bug labels
+- name: bug
+  color: d73a4a
+  description: Something isn't working
+
+- name: critical
+  color: b60205
+  description: Critical bug that needs immediate attention
+
+- name: regression
+  color: d73a4a
+  description: Bug that was introduced in a recent release
+
+# Feature labels
+- name: enhancement
+  color: a2eeef
+  description: New feature or request
+
+- name: feature
+  color: 0e8a16
+  description: New feature
+
+- name: good first issue
+  color: 7057ff
+  description: Good for newcomers
+
+# Documentation labels
+- name: documentation
+  color: 0075ca
+  description: Improvements or additions to documentation
+
+- name: docs
+  color: 0075ca
+  description: Documentation related
+
+# Priority labels
+- name: high priority
+  color: ff0000
+  description: High priority issue
+
+- name: medium priority
+  color: ff8c00
+  description: Medium priority issue
+
+- name: low priority
+  color: 00ff00
+  description: Low priority issue
+
+# Status labels
+- name: help wanted
+  color: 008672
+  description: Extra attention is needed
+
+- name: wontfix
+  color: 000000
+  description: This will not be worked on
+
+- name: duplicate
+  color: cfd3d7
+  description: This issue or pull request already exists
+
+- name: invalid
+  color: e4e669
+  description: Something is wrong
+
+- name: question
+  color: d876e3
+  description: Further information is requested
+
+# Browser specific labels
+- name: chrome
+  color: 4285f4
+  description: Chrome/Edge specific issue
+
+- name: firefox
+  color: ff7139
+  description: Firefox specific issue
+
+- name: safari
+  color: 000000
+  description: Safari specific issue
+
+# Technical labels
+- name: security
+  color: ff0000
+  description: Security related issue
+
+- name: performance
+  color: 00ff00
+  description: Performance related issue
+
+- name: accessibility
+  color: 1d76db
+  description: Accessibility related issue
+
+# Version labels
+- name: v1.0.0
+  color: 000000
+  description: Version 1.0.0
+
+- name: v1.1.0
+  color: 000000
+  description: Version 1.1.0
+
+# Maintenance labels
+- name: maintenance
+  color: 000000
+  description: Maintenance tasks
+
+- name: refactor
+  color: 000000
+  description: Code refactoring
+
+- name: testing
+  color: 000000
+  description: Testing related

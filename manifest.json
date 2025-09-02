@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "DM Shorts Blocker",
+  "version": "1.0.3",
+  "description": "Blocks access to video shorts and hides shorts blocks",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "DM Shorts Blocker"
+  },
+  "icons": {
+    "16": "icons/shield_icon_16x16.png",
+    "48": "icons/shield_icon_48x48.png",
+    "128": "icons/shield_icon_128x128.png"
+  }
+}

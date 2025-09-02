@@ -1,0 +1,145 @@
+name: Monitor
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Check repository health
+        id: health
+        run: |
+          echo "Checking repository health..."
+          
+          # Check for critical issues
+          CRITICAL_ISSUES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/issues?state=open&labels=critical" | jq 'length')
+          
+          # Check for security issues
+          SECURITY_ISSUES=$(curl -s "https://api.github.com/repos/${{ github.repository }}/issues?state=open&labels=security" | jq 'length')
+          
+          # Check for build status
+          BUILD_STATUS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/actions/runs?per_page=1" | jq -r '.workflow_runs[0].conclusion')
+          
+          # Check for recent activity
+          RECENT_COMMITS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/commits?since=$(date -d '7 days ago' -Iseconds)" | jq 'length')
+          
+          # Output variables
+          echo "critical_issues=$CRITICAL_ISSUES" >> $GITHUB_OUTPUT
+          echo "security_issues=$SECURITY_ISSUES" >> $GITHUB_OUTPUT
+          echo "build_status=$BUILD_STATUS" >> $GITHUB_OUTPUT
+          echo "recent_commits=$RECENT_COMMITS" >> $GITHUB_OUTPUT
+
+      - name: Check extension functionality
+        run: |
+          echo "Checking extension functionality..."
+          
+          # Check if required files exist
+          required_files=("manifest.json" "content.js" "popup.html" "popup.js")
+          missing_files=()
+          
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              missing_files+=("$file")
+            fi
+          done
+          
+          if [ ${#missing_files[@]} -gt 0 ]; then
+            echo "❌ Missing required files: ${missing_files[*]}"
+            exit 1
+          else
+            echo "✅ All required files present"
+          fi
+          
+          # Validate manifest
+          if ! node -e "JSON.parse(require('fs').readFileSync('./manifest.json', 'utf8'))"; then
+            echo "❌ Invalid manifest.json"
+            exit 1
+          else
+            echo "✅ Valid manifest.json"
+          fi
+
+      - name: Check for security vulnerabilities
+        run: |
+          echo "Checking for security vulnerabilities..."
+          
+          # Check for known vulnerable patterns
+          if grep -r "eval(" *.js 2>/dev/null; then
+            echo "❌ Security issue: eval() usage found"
+            exit 1
+          fi
+          
+          if grep -r "innerHTML.*<script" *.js 2>/dev/null; then
+            echo "❌ Security issue: Potential XSS vulnerability"
+            exit 1
+          fi
+          
+          echo "✅ No obvious security vulnerabilities found"
+
+      - name: Check performance
+        run: |
+          echo "Checking performance..."
+          
+          # Check file sizes
+          JS_SIZE=$(wc -c < content.js 2>/dev/null || echo 0)
+          CSS_SIZE=$(wc -c < popup.css 2>/dev/null || echo 0)
+          
+          if [ "$JS_SIZE" -gt 100000 ]; then
+            echo "⚠️  Warning: content.js is larger than 100KB ($JS_SIZE bytes)"
+          fi
+          
+          if [ "$CSS_SIZE" -gt 50000 ]; then
+            echo "⚠️  Warning: popup.css is larger than 50KB ($CSS_SIZE bytes)"
+          fi
+          
+          echo "✅ Performance check completed"
+
+      - name: Send health report
+        if: always()
+        uses: sarisia/actions-status-discord@v1
+        if: env.DISCORD_WEBHOOK
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status == 'success' && 'success' || 'failure' }}
+          title: "🏥 Repository Health Check"
+          description: |
+            Repository health check completed.
+            
+            **Status:** ${{ job.status == 'success' && '✅ Healthy' || '❌ Issues Found' }}
+            **Critical Issues:** ${{ steps.health.outputs.critical_issues }}
+            **Security Issues:** ${{ steps.health.outputs.security_issues }}
+            **Build Status:** ${{ steps.health.outputs.build_status }}
+            **Recent Commits (7 days):** ${{ steps.health.outputs.recent_commits }}
+            
+            Repository: ${{ github.repository }}
+
+      - name: Create health issue if problems found
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🏥 Repository Health Check Failed',
+              body: `Repository health check failed on ${new Date().toISOString()}.
+              
+              **Critical Issues:** ${{ steps.health.outputs.critical_issues }}
+              **Security Issues:** ${{ steps.health.outputs.security_issues }}
+              **Build Status:** ${{ steps.health.outputs.build_status }}
+              
+              Please investigate and fix the issues.`,
+              labels: ['health', 'monitoring', 'urgent']
+            });

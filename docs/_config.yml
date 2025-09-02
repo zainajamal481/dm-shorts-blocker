@@ -1,0 +1,59 @@
+title: DM Shorts Blocker Documentation
+description: Official documentation for DM Shorts Blocker browser extension
+author: DM Shorts Blocker Team
+email: fami1ycrea1or@gmail.com
+
+# GitHub Pages settings
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+- jekyll-remote-theme
+
+# Site settings
+url: "https://SammeLn1719.github.io"
+baseurl: "/dm-shorts-blocker"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "page"
+
+# Navigation
+nav:
+  - title: Home
+    url: /
+  - title: Getting Started
+    url: /getting-started/
+  - title: Installation
+    url: /installation/
+  - title: User Guide
+    url: /user-guide/
+  - title: Troubleshooting
+    url: /troubleshooting/
+  - title: Developer Guide
+    url: /developer-guide/
+  - title: API Reference
+    url: /api-reference/
+  - title: FAQ
+    url: /faq/
+
+# Footer
+footer:
+  - title: GitHub
+    url: https://github.com/SammeLn1719/dm-shorts-blocker
+  - title: Issues
+    url: https://github.com/SammeLn1719/dm-shorts-blocker/issues
+  - title: Discussions
+    url: https://github.com/SammeLn1719/dm-shorts-blocker/discussions

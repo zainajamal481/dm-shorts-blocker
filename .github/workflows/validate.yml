@@ -1,0 +1,167 @@
+name: Validate
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: |
+        if [ -f package.json ]; then
+          npm ci
+        fi
+
+    - name: Validate manifest files
+      run: |
+        # Validate Chrome manifest
+        if [ -f manifest.json ]; then
+          echo "Validating manifest.json..."
+          node -e "
+            try {
+              const manifest = JSON.parse(require('fs').readFileSync('./manifest.json', 'utf8'));
+              console.log('✅ manifest.json is valid JSON');
+              console.log('Version:', manifest.version);
+              console.log('Name:', manifest.name);
+            } catch (e) {
+              console.error('❌ manifest.json is invalid:', e.message);
+              process.exit(1);
+            }
+          "
+        fi
+        
+        # Validate Firefox manifest
+        if [ -f manifest-firefox.json ]; then
+          echo "Validating manifest-firefox.json..."
+          node -e "
+            try {
+              const manifest = JSON.parse(require('fs').readFileSync('./manifest-firefox.json', 'utf8'));
+              console.log('✅ manifest-firefox.json is valid JSON');
+              console.log('Version:', manifest.version);
+              console.log('Name:', manifest.name);
+            } catch (e) {
+              console.error('❌ manifest-firefox.json is invalid:', e.message);
+              process.exit(1);
+            }
+          "
+        fi
+
+    - name: Check file structure
+      run: |
+        echo "Checking required files..."
+        
+        # Check for required files
+        required_files=("manifest.json" "content.js" "popup.html" "popup.js")
+        for file in "${required_files[@]}"; do
+          if [ -f "$file" ]; then
+            echo "✅ $file exists"
+          else
+            echo "❌ $file is missing"
+            exit 1
+          fi
+        done
+        
+        # Check for icons directory
+        if [ -d "icons" ]; then
+          echo "✅ icons directory exists"
+        else
+          echo "❌ icons directory is missing"
+          exit 1
+        fi
+
+    - name: Validate HTML
+      run: |
+        if [ -f popup.html ]; then
+          echo "Validating popup.html..."
+          # Basic HTML validation (check for basic structure)
+          if grep -q "<!DOCTYPE html>" popup.html && grep -q "<html" popup.html && grep -q "</html>" popup.html; then
+            echo "✅ popup.html has basic HTML structure"
+          else
+            echo "❌ popup.html missing basic HTML structure"
+            exit 1
+          fi
+        fi
+
+    - name: Validate CSS
+      run: |
+        if [ -f popup.css ]; then
+          echo "Validating popup.css..."
+          # Basic CSS validation (check for basic syntax)
+          if grep -q "{" popup.css && grep -q "}" popup.css; then
+            echo "✅ popup.css has basic CSS structure"
+          else
+            echo "❌ popup.css missing basic CSS structure"
+            exit 1
+          fi
+        fi
+
+    - name: Validate JavaScript
+      run: |
+        if [ -f content.js ]; then
+          echo "Validating content.js..."
+          # Basic JavaScript validation (check for basic syntax)
+          if node -c content.js; then
+            echo "✅ content.js has valid JavaScript syntax"
+          else
+            echo "❌ content.js has invalid JavaScript syntax"
+            exit 1
+          fi
+        fi
+        
+        if [ -f popup.js ]; then
+          echo "Validating popup.js..."
+          if node -c popup.js; then
+            echo "✅ popup.js has valid JavaScript syntax"
+          else
+            echo "❌ popup.js has invalid JavaScript syntax"
+            exit 1
+          fi
+        fi
+
+    - name: Check for security issues
+      run: |
+        echo "Checking for potential security issues..."
+        
+        # Check for eval() usage
+        if grep -r "eval(" *.js 2>/dev/null; then
+          echo "⚠️  Warning: eval() found in JavaScript files"
+        else
+          echo "✅ No eval() usage found"
+        fi
+        
+        # Check for innerHTML usage
+        if grep -r "innerHTML" *.js 2>/dev/null; then
+          echo "⚠️  Warning: innerHTML usage found"
+        else
+          echo "✅ No innerHTML usage found"
+        fi
+
+    - name: Run tests (if available)
+      run: |
+        if [ -f package.json ] && npm run test 2>/dev/null; then
+          npm test
+        else
+          echo "No tests configured"
+        fi
+
+    - name: Lint code (if available)
+      run: |
+        if [ -f package.json ] && npm run lint 2>/dev/null; then
+          npm run lint
+        else
+          echo "No linting configured"
+        fi

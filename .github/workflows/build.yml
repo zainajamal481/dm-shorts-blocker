@@ -1,0 +1,196 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+          fi
+
+      - name: Build Chrome extension
+        if: matrix.browser == 'chrome'
+        run: |
+          if [ -f build.sh ]; then
+            chmod +x build.sh
+            ./build.sh
+          fi
+
+      - name: Build Firefox extension
+        if: matrix.browser == 'firefox'
+        run: |
+          if [ -f build-firefox.sh ]; then
+            chmod +x build-firefox.sh
+            ./build-firefox.sh
+          fi
+
+      - name: Validate build output
+        if: matrix.browser == 'chrome'
+        run: |
+          echo "Validating Chrome build..."
+          
+          if [ -d "build" ]; then
+            echo "✅ Build directory exists"
+            
+            # Check for required files
+            required_files=("manifest.json" "content.js" "popup.html" "popup.js")
+            for file in "${required_files[@]}"; do
+              if [ -f "build/$file" ]; then
+                echo "✅ build/$file exists"
+              else
+                echo "❌ build/$file is missing"
+                exit 1
+              fi
+            done
+            
+            # Check file sizes
+            echo "Build file sizes:"
+            ls -lh build/
+            
+          else
+            echo "❌ Build directory does not exist"
+            exit 1
+          fi
+
+      - name: Validate Firefox build output
+        if: matrix.browser == 'firefox'
+        run: |
+          echo "Validating Firefox build..."
+          
+          if [ -d "build-firefox" ]; then
+            echo "✅ Build-firefox directory exists"
+            
+            # Check for required files
+            required_files=("manifest.json" "content.js" "popup.html" "popup.js")
+            for file in "${required_files[@]}"; do
+              if [ -f "build-firefox/$file" ]; then
+                echo "✅ build-firefox/$file exists"
+              else
+                echo "❌ build-firefox/$file is missing"
+                exit 1
+              fi
+            done
+            
+            # Check file sizes
+            echo "Firefox build file sizes:"
+            ls -lh build-firefox/
+            
+          else
+            echo "❌ Build-firefox directory does not exist"
+            exit 1
+          fi
+
+      - name: Create build artifacts
+        if: matrix.browser == 'chrome'
+        run: |
+          if [ -d "build" ]; then
+            cd build
+            zip -r ../youtube-shorts-blocker-chrome-${{ github.sha }}.zip .
+            cd ..
+            echo "Chrome extension zip created: youtube-shorts-blocker-chrome-${{ github.sha }}.zip"
+          fi
+
+      - name: Create Firefox build artifacts
+        if: matrix.browser == 'firefox'
+        run: |
+          if [ -d "build-firefox" ]; then
+            cd build-firefox
+            zip -r ../youtube-shorts-blocker-firefox-${{ github.sha }}.zip .
+            cd ..
+            echo "Firefox extension zip created: youtube-shorts-blocker-firefox-${{ github.sha }}.zip"
+          fi
+
+      - name: Upload Chrome build artifacts
+        if: matrix.browser == 'chrome'
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-extension-${{ github.sha }}
+          path: |
+            build/
+            youtube-shorts-blocker-chrome-${{ github.sha }}.zip
+          retention-days: 30
+
+      - name: Upload Firefox build artifacts
+        if: matrix.browser == 'firefox'
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-extension-${{ github.sha }}
+          path: |
+            build-firefox/
+            youtube-shorts-blocker-firefox-${{ github.sha }}.zip
+          retention-days: 30
+
+  build-size:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Check build sizes
+        run: |
+          echo "Checking build sizes..."
+          
+          # Check Chrome build size
+          if [ -d "artifacts/chrome-extension-${{ github.sha }}" ]; then
+            echo "Chrome build size:"
+            du -sh artifacts/chrome-extension-${{ github.sha }}/
+            find artifacts/chrome-extension-${{ github.sha }}/ -type f -exec ls -lh {} \;
+          fi
+          
+          # Check Firefox build size
+          if [ -d "artifacts/firefox-extension-${{ github.sha }}" ]; then
+            echo "Firefox build size:"
+            du -sh artifacts/firefox-extension-${{ github.sha }}/
+            find artifacts/firefox-extension-${{ github.sha }}/ -type f -exec ls -lh {} \;
+          fi
+          
+          # Set size limits
+          CHROME_SIZE_LIMIT=500000  # 500KB
+          FIREFOX_SIZE_LIMIT=500000  # 500KB
+          
+          # Check Chrome size
+          if [ -f "artifacts/youtube-shorts-blocker-chrome-${{ github.sha }}.zip" ]; then
+            CHROME_SIZE=$(stat -c%s "artifacts/youtube-shorts-blocker-chrome-${{ github.sha }}.zip")
+            if [ "$CHROME_SIZE" -gt "$CHROME_SIZE_LIMIT" ]; then
+              echo "⚠️  Warning: Chrome build is larger than limit ($CHROME_SIZE bytes > $CHROME_SIZE_LIMIT bytes)"
+            else
+              echo "✅ Chrome build is within size limit ($CHROME_SIZE bytes <= $CHROME_SIZE_LIMIT bytes)"
+            fi
+          fi
+          
+          # Check Firefox size
+          if [ -f "artifacts/youtube-shorts-blocker-firefox-${{ github.sha }}.zip" ]; then
+            FIREFOX_SIZE=$(stat -c%s "artifacts/youtube-shorts-blocker-firefox-${{ github.sha }}.zip")
+            if [ "$FIREFOX_SIZE" -gt "$FIREFOX_SIZE_LIMIT" ]; then
+              echo "⚠️  Warning: Firefox build is larger than limit ($FIREFOX_SIZE bytes > $FIREFOX_SIZE_LIMIT bytes)"
+            else
+              echo "✅ Firefox build is within size limit ($FIREFOX_SIZE bytes <= $FIREFOX_SIZE_LIMIT bytes)"
+            fi
+          fi

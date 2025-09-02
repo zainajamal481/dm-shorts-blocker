@@ -1,0 +1,114 @@
+name: Performance check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  performance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Check file sizes
+        run: |
+          echo "Checking file sizes..."
+          
+          # Check JavaScript file sizes
+          echo "JavaScript files:"
+          find . -name "*.js" -not -path "./node_modules/*" -not -path "./.git/*" -exec ls -lh {} \; | sort -k5 -hr
+          
+          # Check CSS file sizes
+          echo "CSS files:"
+          find . -name "*.css" -not -path "./node_modules/*" -not -path "./.git/*" -exec ls -lh {} \; | sort -k5 -hr
+          
+          # Check HTML file sizes
+          echo "HTML files:"
+          find . -name "*.html" -not -path "./node_modules/*" -not -path "./.git/*" -exec ls -lh {} \; | sort -k5 -hr
+          
+          # Check total extension size
+          echo "Total extension size (excluding node_modules and .git):"
+          du -sh . --exclude=node_modules --exclude=.git
+
+      - name: Check for performance issues
+        run: |
+          echo "Checking for performance issues..."
+          
+          # Check for large loops
+          if grep -r "for.*in.*document" *.js 2>/dev/null; then
+            echo "⚠️  Warning: Potential performance issue - for...in loop on document"
+          fi
+          
+          # Check for frequent DOM queries
+          if grep -r "querySelector\|getElementById\|getElementsByClassName" *.js 2>/dev/null | wc -l | grep -q "[5-9]\|1[0-9]"; then
+            echo "⚠️  Warning: Many DOM queries found - consider caching selectors"
+          fi
+          
+          # Check for synchronous operations
+          if grep -r "XMLHttpRequest\|fetch.*await" *.js 2>/dev/null; then
+            echo "✅ Async operations found - good for performance"
+          fi
+          
+          # Check for event listener optimization
+          if grep -r "addEventListener.*function" *.js 2>/dev/null; then
+            echo "✅ Event listeners properly attached"
+          fi
+
+      - name: Check bundle size (if applicable)
+        run: |
+          if [ -f package.json ] && npm run build 2>/dev/null; then
+            echo "Building and checking bundle size..."
+            npm run build
+            
+            # Check if build directory exists
+            if [ -d "build" ]; then
+              echo "Build directory size:"
+              du -sh build/
+              
+              echo "Individual build files:"
+              find build/ -type f -exec ls -lh {} \;
+            fi
+          else
+            echo "No build process configured"
+          fi
+
+      - name: Performance budget check
+        run: |
+          echo "Setting performance budgets..."
+          
+          # Define size limits
+          JS_SIZE_LIMIT=100000  # 100KB
+          CSS_SIZE_LIMIT=50000   # 50KB
+          HTML_SIZE_LIMIT=10000  # 10KB
+          
+          # Check JavaScript files
+          for file in *.js; do
+            if [ -f "$file" ]; then
+              size=$(wc -c < "$file")
+              if [ "$size" -gt "$JS_SIZE_LIMIT" ]; then
+                echo "⚠️  Warning: $file is larger than budget ($size bytes > $JS_SIZE_LIMIT bytes)"
+              else
+                echo "✅ $file is within budget ($size bytes <= $JS_SIZE_LIMIT bytes)"
+              fi
+            fi
+          done
+          
+          # Check CSS files
+          for file in *.css; do
+            if [ -f "$file" ]; then
+              size=$(wc -c < "$file")
+              if [ "$size" -gt "$CSS_SIZE_LIMIT" ]; then
+                echo "⚠️  Warning: $file is larger than budget ($size bytes > $CSS_SIZE_LIMIT bytes)"
+              else
+                echo "✅ $file is within budget ($size bytes <= $CSS_SIZE_LIMIT bytes)"
+              fi
+            fi
+          done

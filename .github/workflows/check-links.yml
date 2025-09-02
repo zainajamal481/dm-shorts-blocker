@@ -1,0 +1,35 @@
+name: Check links
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '*.md'
+      - 'docs/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '*.md'
+      - 'docs/**'
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check
+
+      - name: Check links in markdown files
+        run: |
+          find . -name "*.md" -not -path "./node_modules/*" -not -path "./.git/*" | while read file; do
+            echo "Checking links in $file"
+            markdown-link-check "$file" --config .github/markdown-link-check-config.json || exit 1
+          done

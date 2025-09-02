@@ -1,0 +1,112 @@
+# GitHub repository settings
+repository:
+      name: dm-shorts-blocker
+    description: "A browser extension that blocks video shorts to help you stay focused and productive"
+    homepage: "https://SammeLn1719.github.io/dm-shorts-blocker"
+  topics:
+    - "browser-extension"
+    - "youtube"
+    - "productivity"
+    - "focus"
+    - "shorts-blocker"
+    - "chrome-extension"
+    - "firefox-addon"
+    - "edge-extension"
+    - "javascript"
+    - "dom-manipulation"
+  has_wiki: false
+  has_projects: true
+  has_downloads: true
+  default_branch: main
+  allow_squash_merge: true
+  allow_merge_commit: true
+  allow_rebase_merge: true
+  delete_branch_on_merge: true
+
+# Branch protection
+branches:
+  - name: main
+    protection:
+      required_status_checks:
+        strict: true
+        contexts: []
+      enforce_admins: false
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+        require_code_owner_reviews: false
+      restrictions: null
+
+# Issue templates
+issue_template:
+  - name: Bug Report
+    about: Create a report to help us improve
+    title: "[BUG] "
+    labels: ["bug"]
+    body: |
+      **Describe the bug**
+      A clear and concise description of what the bug is.
+
+      **To Reproduce**
+      Steps to reproduce the behavior:
+      1. Go to '...'
+      2. Click on '....'
+      3. Scroll down to '....'
+      4. See error
+
+      **Expected behavior**
+      A clear and concise description of what you expected to happen.
+
+      **Screenshots**
+      If applicable, add screenshots to help explain your problem.
+
+      **Environment:**
+      - OS: [e.g. Windows 10, macOS, Ubuntu]
+      - Browser: [e.g. Chrome 120, Firefox 121, Edge 120]
+      - Extension Version: [e.g. 1.0.0]
+
+      **Additional context**
+      Add any other context about the problem here.
+
+  - name: Feature Request
+    about: Suggest an idea for this project
+    title: "[FEATURE] "
+    labels: ["enhancement"]
+    body: |
+      **Is your feature request related to a problem? Please describe.**
+      A clear and concise description of what the problem is.
+
+      **Describe the solution you'd like**
+      A clear and concise description of what you want to happen.
+
+      **Describe alternatives you've considered**
+      A clear and concise description of any alternative solutions or features you've considered.
+
+      **Additional context**
+      Add any other context or screenshots about the feature request here.
+
+# Pull request template
+pull_request_template: |
+  ## Description
+  Brief description of what this PR does and why it's needed.
+
+  ## Type of Change
+  - [ ] Bug fix (non-breaking change which fixes an issue)
+  - [ ] New feature (non-breaking change which adds functionality)
+  - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+  - [ ] Documentation update
+
+  ## Testing
+  - [ ] Tested in Chrome
+  - [ ] Tested in Firefox
+  - [ ] Tested in Edge
+  - [ ] Verified extension popup functionality
+
+  ## Checklist
+  - [ ] My code follows the style guidelines of this project
+  - [ ] I have performed a self-review of my own code
+  - [ ] I have commented my code, particularly in hard-to-understand areas
+  - [ ] My changes generate no new warnings
+
+  ## Related Issues
+  Closes #[issue number]

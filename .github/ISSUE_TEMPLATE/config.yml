@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Community Support
+    url: https://github.com/orgs/community/discussions
+    about: Please ask and answer questions here.
+      - name: DM Shorts Blocker Discussions
+          url: https://github.com/SammeLn1719/dm-shorts-blocker/discussions
+    about: General questions and discussions about the extension.
