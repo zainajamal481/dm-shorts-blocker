@@ -74,7 +74,12 @@ class YouTubeShortsBlocker {
       'ytd-rich-section-renderer:has(span:contains("Короткие видео"))',
       'ytd-rich-section-renderer:has(span:contains("Short videos"))',
       'ytd-rich-grid-row:has(ytd-rich-item-renderer a[href*="/shorts/"])',
-      'ytd-rich-grid-row:has(ytd-rich-item-renderer:has(span:contains("Shorts")))'
+      'ytd-rich-grid-row:has(ytd-rich-item-renderer:has(span:contains("Shorts")))',
+      'ytd-mini-guide-entry-renderer[aria-label="Shorts"]',
+      'ytd-guide-entry-renderer:has(yt-formatted-string:contains("Shorts"))',
+      'ytd-reel-shelf-renderer',
+      'ytd-guide-entry-renderer a[title="Shorts"]',
+      '.ytChipShapeChip:contains("Shorts")'
     ];
 
     shortsSelectors.forEach(selector => {

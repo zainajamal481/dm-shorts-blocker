@@ -1,6 +1,6 @@
 # Project Structure Overview
 
-This document provides an overview of the complete project structure for YouTube Shorts Blocker, including all the files and directories that have been set up for a professional open source project.
+This document provides an overview of the complete project structure for Shorts Blocker, including all the files and directories that have been set up for a professional open source project.
 
 ## 📁 Root Directory
 
@@ -98,11 +98,11 @@ dm-shorts-blocker/
 
 - **`manifest.json`** - Chrome/Edge extension configuration
 - **`manifest-firefox.json`** - Firefox extension configuration
-- **`content.js`** - Main script that runs on YouTube pages
+- **`content.js`** - Main script that runs on pages
 - **`background.js`** - Background script for Chrome/Edge
 - **`background-firefox.js`** - Background script for Firefox
 - **`popup.html/js/css`** - Extension popup interface
-- **`styles.css`** - Styles for hiding YouTube Shorts elements
+- **`styles.css`** - Styles for hiding Shorts elements
 
 ### Documentation Files
 
