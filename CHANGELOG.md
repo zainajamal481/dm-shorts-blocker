@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Chrome and Firefox extension support
-- YouTube Shorts blocking functionality
+- Shorts blocking functionality
 - Element hiding for Shorts blocks on homepage
 - Link blocking to prevent navigation to Shorts
 - User interface with toggle switch
@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cross-browser compatibility
 
 ### Features
-- **Shorts Blocking**: Automatically redirects from Shorts pages to YouTube homepage
+- **Shorts Blocking**: Automatically redirects from Shorts pages to homepage
 - **Element Hiding**: Removes Shorts blocks from homepage and recommendations
 - **Link Blocking**: Prevents navigation to Shorts links
 - **Notifications**: Shows notifications about blocked actions
@@ -66,7 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Release Notes
 
 ### Version 1.0.0
-This is the first stable release of YouTube Shorts Blocker. The extension provides comprehensive blocking of YouTube Shorts content across multiple browsers with a user-friendly interface.
+This is the first stable release of  Shorts Blocker. The extension provides comprehensive blocking of  Shorts content across multiple browsers with a user-friendly interface.
 
 ### Version 0.9.0
 Initial development version with basic functionality. This version was used for testing and development purposes.

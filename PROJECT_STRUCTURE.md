@@ -5,7 +5,7 @@ This document provides an overview of the complete project structure for YouTube
 ## 📁 Root Directory
 
 ```
-youtube-shorts-blocker/
+dm-shorts-blocker/
 ├── 📄 README.md                    # Main project documentation
 ├── 📄 LICENSE                      # MIT License
 ├── 📄 CHANGELOG.md                 # Version history and changes

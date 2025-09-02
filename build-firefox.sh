@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# YouTube Shorts Blocker - Firefox Build Script
+# DM Shorts Blocker - Firefox Build Script
 
-echo "🦊 Сборка YouTube Shorts Blocker для Firefox..."
+echo "🦊 Сборка DM Shorts Blocker для Firefox..."
 
 # Создаем папку для сборки Firefox
 BUILD_DIR="build-firefox"
@@ -25,11 +25,11 @@ cp background-firefox.js $BUILD_DIR/background.js
 # Создаем ZIP архив
 echo "📦 Создание архива..."
 cd $BUILD_DIR
-zip -r ../youtube-shorts-blocker-firefox-fixed.zip . > /dev/null
+zip -r ../dm-shorts-blocker-firefox-fixed.zip . > /dev/null
 cd ..
 
 echo "✅ Сборка Firefox завершена!"
-echo "📁 Firefox версия: youtube-shorts-blocker-firefox-fixed.zip"
+echo "📁 Firefox версия: dm-shorts-blocker-firefox-fixed.zip"
 echo ""
 echo "🎯 Для установки в Firefox:"
 echo "1. Откройте about:debugging"

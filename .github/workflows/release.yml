@@ -44,14 +44,14 @@ jobs:
         # Create Chrome extension zip
         if [ -d build ]; then
           cd build
-          zip -r ../youtube-shorts-blocker-chrome-v${GITHUB_REF#refs/tags/}.zip .
+          zip -r ../dm-shorts-blocker-chrome-v${GITHUB_REF#refs/tags/}.zip .
           cd ..
         fi
         
         # Create Firefox extension zip
         if [ -d build-firefox ]; then
           cd build-firefox
-          zip -r ../youtube-shorts-blocker-firefox-v${GITHUB_REF#refs/tags/}.zip .
+          zip -r ../dm-shorts-blocker-firefox-v${GITHUB_REF#refs/tags/}.zip .
           cd ..
         fi
 
@@ -107,8 +107,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./youtube-shorts-blocker-chrome-v${{ github.ref_name }}.zip
-        asset_name: youtube-shorts-blocker-chrome-v${{ github.ref_name }}.zip
+        asset_path: ./dm-shorts-blocker-chrome-v${{ github.ref_name }}.zip
+        asset_name: dm-shorts-blocker-chrome-v${{ github.ref_name }}.zip
         asset_content_type: application/zip
 
     - name: Upload Firefox Extension
@@ -117,6 +117,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./youtube-shorts-blocker-firefox-v${{ github.ref_name }}.zip
-        asset_name: youtube-shorts-blocker-firefox-v${{ github.ref_name }}.zip
+        asset_path: ./dm-shorts-blocker-firefox-v${{ github.ref_name }}.zip
+        asset_name: dm-shorts-blocker-firefox-v${{ github.ref_name }}.zip
         asset_content_type: application/zip

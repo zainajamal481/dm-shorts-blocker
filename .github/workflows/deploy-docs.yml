@@ -34,7 +34,7 @@ jobs:
     - name: Build documentation
       run: |
         cd docs
-        jekyll build --baseurl "/youtube-shorts-blocker"
+        jekyll build --baseurl "/dm-shorts-blocker"
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3

@@ -25,7 +25,7 @@ jobs:
           TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
           
           # Create backup filename
-          BACKUP_FILE="youtube-shorts-blocker-backup-$TIMESTAMP.zip"
+          BACKUP_FILE="dm-shorts-blocker-backup-$TIMESTAMP.zip"
           
           # Create backup excluding unnecessary files
           zip -r "$BACKUP_FILE" . \

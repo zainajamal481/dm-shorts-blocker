@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# YouTube Shorts Blocker - Build Script
+# DM Shorts Blocker - Build Script
 
-echo "🚀 Сборка YouTube Shorts Blocker..."
+echo "🚀 Сборка DM Shorts Blocker..."
 
 # Создаем папку для сборки
 BUILD_DIR="build"
@@ -36,16 +36,16 @@ cp manifest-firefox.json $FIREFOX_DIR/manifest.json
 echo "📦 Создание архивов..."
 
 cd $CHROME_DIR
-zip -r ../youtube-shorts-blocker-chrome.zip . > /dev/null
+zip -r ../dm-shorts-blocker-chrome.zip . > /dev/null
 
 cd ../firefox
-zip -r ../youtube-shorts-blocker-firefox.zip . > /dev/null
+zip -r ../dm-shorts-blocker-firefox.zip . > /dev/null
 
 cd ../..
 
 echo "✅ Сборка завершена!"
-echo "📁 Chrome версия: $BUILD_DIR/youtube-shorts-blocker-chrome.zip"
-echo "📁 Firefox версия: $BUILD_DIR/youtube-shorts-blocker-firefox.zip"
+echo "📁 Chrome версия: $BUILD_DIR/dm-shorts-blocker-chrome.zip"
+echo "📁 Firefox версия: $BUILD_DIR/dm-shorts-blocker-firefox.zip"
 echo ""
 echo "🎯 Для установки:"
 echo "Chrome: chrome://extensions/ → Режим разработчика → Загрузить распакованное расширение"

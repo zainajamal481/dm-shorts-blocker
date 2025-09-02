@@ -106,9 +106,9 @@ jobs:
         run: |
           if [ -d "build" ]; then
             cd build
-            zip -r ../youtube-shorts-blocker-chrome-${{ github.sha }}.zip .
+            zip -r ../dm-shorts-blocker-chrome-${{ github.sha }}.zip .
             cd ..
-            echo "Chrome extension zip created: youtube-shorts-blocker-chrome-${{ github.sha }}.zip"
+            echo "Chrome extension zip created: dm-shorts-blocker-chrome-${{ github.sha }}.zip"
           fi
 
       - name: Create Firefox build artifacts
@@ -116,9 +116,9 @@ jobs:
         run: |
           if [ -d "build-firefox" ]; then
             cd build-firefox
-            zip -r ../youtube-shorts-blocker-firefox-${{ github.sha }}.zip .
+            zip -r ../dm-shorts-blocker-firefox-${{ github.sha }}.zip .
             cd ..
-            echo "Firefox extension zip created: youtube-shorts-blocker-firefox-${{ github.sha }}.zip"
+            echo "Firefox extension zip created: dm-shorts-blocker-firefox-${{ github.sha }}.zip"
           fi
 
       - name: Upload Chrome build artifacts
@@ -128,7 +128,7 @@ jobs:
           name: chrome-extension-${{ github.sha }}
           path: |
             build/
-            youtube-shorts-blocker-chrome-${{ github.sha }}.zip
+            dm-shorts-blocker-chrome-${{ github.sha }}.zip
           retention-days: 30
 
       - name: Upload Firefox build artifacts
@@ -138,7 +138,7 @@ jobs:
           name: firefox-extension-${{ github.sha }}
           path: |
             build-firefox/
-            youtube-shorts-blocker-firefox-${{ github.sha }}.zip
+            dm-shorts-blocker-firefox-${{ github.sha }}.zip
           retention-days: 30
 
   build-size:
@@ -176,8 +176,8 @@ jobs:
           FIREFOX_SIZE_LIMIT=500000  # 500KB
           
           # Check Chrome size
-          if [ -f "artifacts/youtube-shorts-blocker-chrome-${{ github.sha }}.zip" ]; then
-            CHROME_SIZE=$(stat -c%s "artifacts/youtube-shorts-blocker-chrome-${{ github.sha }}.zip")
+          if [ -f "artifacts/dm-shorts-blocker-chrome-${{ github.sha }}.zip" ]; then
+            CHROME_SIZE=$(stat -c%s "artifacts/dm-shorts-blocker-chrome-${{ github.sha }}.zip")
             if [ "$CHROME_SIZE" -gt "$CHROME_SIZE_LIMIT" ]; then
               echo "⚠️  Warning: Chrome build is larger than limit ($CHROME_SIZE bytes > $CHROME_SIZE_LIMIT bytes)"
             else
@@ -186,8 +186,8 @@ jobs:
           fi
           
           # Check Firefox size
-          if [ -f "artifacts/youtube-shorts-blocker-firefox-${{ github.sha }}.zip" ]; then
-            FIREFOX_SIZE=$(stat -c%s "artifacts/youtube-shorts-blocker-firefox-${{ github.sha }}.zip")
+          if [ -f "artifacts/dm-shorts-blocker-firefox-${{ github.sha }}.zip" ]; then
+            FIREFOX_SIZE=$(stat -c%s "artifacts/dm-shorts-blocker-firefox-${{ github.sha }}.zip")
             if [ "$FIREFOX_SIZE" -gt "$FIREFOX_SIZE_LIMIT" ]; then
               echo "⚠️  Warning: Firefox build is larger than limit ($FIREFOX_SIZE bytes > $FIREFOX_SIZE_LIMIT bytes)"
             else

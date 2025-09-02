@@ -1,5 +1,5 @@
-// YouTube Shorts Blocker - Background Script for Firefox
-console.log('YouTube Shorts Blocker installed');
+// DM Shorts Blocker - Background Script for Firefox
+console.log('DM Shorts Blocker installed');
 
 // Set default settings
 browser.storage.sync.set({

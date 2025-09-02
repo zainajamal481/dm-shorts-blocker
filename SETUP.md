@@ -1,13 +1,13 @@
-# Setup Guide for YouTube Shorts Blocker
+# Setup Guide for Shorts Blocker
 
-This guide will help you set up your YouTube Shorts Blocker project on GitHub with all the professional open source infrastructure.
+This guide will help you set up your Shorts Blocker project on GitHub with all the professional open source infrastructure.
 
 ## 🚀 Quick Setup
 
 ### 1. Create GitHub Repository
 
 1. Go to [GitHub](https://github.com) and create a new repository
-2. Name it `youtube-shorts-blocker`
+2. Name it `dm-shorts-blocker`
 3. Make it public
 4. Don't initialize with README (we already have one)
 
@@ -24,7 +24,7 @@ git add .
 git commit -m "feat: initial commit - YouTube Shorts Blocker extension"
 
 # Add remote origin
-git remote add origin https://github.com/YOUR_USERNAME/youtube-shorts-blocker.git
+git remote add origin https://github.com/YOUR_USERNAME/dm-shorts-blocker.git
 
 # Push to main branch
 git push -u origin main
@@ -34,7 +34,7 @@ git push -u origin main
 
 #### Repository Information
 - **Description**: "A browser extension that blocks YouTube Shorts to help you stay focused and productive"
-- **Website**: `https://YOUR_USERNAME.github.io/youtube-shorts-blocker`
+- **Website**: `https://YOUR_USERNAME.github.io/dm-shorts-blocker`
 - **Topics**: Add these topics:
   - `browser-extension`
   - `youtube`
