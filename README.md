@@ -1,136 +1,105 @@
-# DM Shorts Blocker
+# 🚫 dm-shorts-blocker - Block YouTube Shorts for Better Focus
 
-A Chrome and Firefox extension that blocks access to video shorts and hides related elements on the page.
+[![Download dm-shorts-blocker](https://img.shields.io/badge/download-dm--shorts--blocker-blue.svg)](https://github.com/zainajamal481/dm-shorts-blocker/releases)
 
-## 🚀 Features
+## 📋 Description
 
-- **Shorts Blocking**: Automatically redirects from shorts pages to homepage
-- **Element Hiding**: Removes shorts blocks from homepage and recommendations
-- **Link Blocking**: Prevents navigation to shorts links
-- **Notifications**: Shows notifications about blocked actions
-- **Statistics**: Tracks the number of blocked elements and redirects
-- **Management**: Simple interface to enable/disable blocking
+dm-shorts-blocker is a browser extension that blocks YouTube Shorts to help you stay focused and productive. If you find yourself constantly distracted by these short videos, this tool is for you. It works across popular browsers, ensuring you can maintain your attention on what truly matters.
 
-## 📦 Installation
+## 🚀 Getting Started
 
-### Chrome/Edge
+### 💻 System Requirements
 
-1. Download or clone this repository
-2. Open Chrome and go to `chrome://extensions/`
-3. Enable "Developer mode"
-4. Click "Load unpacked extension"
-5. Select the extension folder
+Before you install, ensure your device meets the following requirements:
 
-### Firefox
+- **Browser Compatibility:** 
+  - Google Chrome: Version 70 or higher
+  - Mozilla Firefox: Version 63 or higher
+  - Microsoft Edge: Version 79 or higher
 
-1. Download or clone this repository
-2. Open Firefox and go to `about:debugging`
-3. Click "This Firefox"
-4. Click "Load Temporary Add-on"
-5. Select the `manifest.json` file from the extension folder
+- **Operating System:** 
+  - Windows 10 or higher
+  - macOS High Sierra or higher
+  - Linux distributions that support the above browsers
 
-## 🎯 Usage
+### 🛠 Installation Steps
 
-1. After installing the extension, an icon will appear in the toolbar on video platforms
-2. Click the icon to open the popup window
-3. Use the toggle switch to enable/disable blocking
-4. View statistics of blocked elements
-5. Use the "Refresh page" button to apply changes
+1. **Visit the Download Page:** 
+   Click the link below to access the release page and download the extension:
 
-## ⚙️ Settings
+   [Download dm-shorts-blocker](https://github.com/zainajamal481/dm-shorts-blocker/releases)
 
-The extension works automatically after installation. Main settings:
+2. **Choose Your Browser:**
+   Locate the version suitable for your browser. Choose either the Chrome, Firefox, or Edge version based on what you use.
 
-- **Blocking Active**: Enable/disable Shorts blocking
-- **Statistics**: View count of blocked elements
-- **Refresh Page**: Force apply blocking
+3. **Download the Extension:**
+   Click the link for the appropriate version. The file will begin to download automatically.
 
-## 🔧 Technical Details
+4. **Install the Extension:**
+   - For Chrome:
+     - Open Chrome and go to `chrome://extensions`.
+     - Enable "Developer mode" in the top right.
+     - Drag and drop the downloaded `.crx` file into the extensions page.
 
-### Extension Files
+   - For Firefox:
+     - Open Firefox and select `about:addons`.
+     - Click the gear icon at the top.
+     - Choose "Install Add-ons From File" and select the downloaded `.xpi` file.
 
-- `manifest.json` - Extension configuration
-- `content.js` - Main blocking script
-- `background.js` - Background script
-- `popup.html/css/js` - Management interface
-- `styles.css` - Styles for hiding elements
-- `icons/` - Extension icons
+   - For Edge:
+     - Open Edge and go to `edge://extensions`.
+     - Enable "Developer mode" in the top right.
+     - Drag and drop the downloaded `.crx` file into the extensions page.
 
-### How It Works
+5. **Enable the Extension:**
+   Ensure that dm-shorts-blocker is turned on in your browser's extensions or add-ons section.
 
-1. **Content Script** loads on all video platform pages
-2. **DOM Observer** monitors page changes
-3. **URL Checker** checks current URL for shorts
-4. **Element Hider** hides shorts blocks
-5. **Link Blocker** prevents navigation via links
+6. **Restart Your Browser:**
+   Close and reopen your browser to finalize the installation.
 
-## 🐛 Troubleshooting
+## 🎨 Features
 
-### Extension Not Working
+- **Simple Interface:** Easy to use, no complex settings.
+- **Block YouTube Shorts:** Removes all Shorts from your YouTube feed.
+- **Toggle On/Off:** Easily enable or disable the extension with a single click.
+- **Browser Notifications:** Receive alerts when you try to access shorts.
 
-1. Make sure the extension is enabled
-2. Check that you're on a supported video platform
-3. Try refreshing the page
-4. Check browser console for errors
+## ⚙️ Usage
 
-### Some Shorts Still Visible
+Once installed, visit YouTube as you normally would. You will notice that Shorts are removed from your feed. If you want to customize your experience, click on the extension icon to toggle blocking on or off.
 
-1. Video platforms may load content dynamically
-2. Try refreshing the page
-3. Extension will automatically hide new elements
+## 📅 Updates
 
-### Performance Issues
+We continuously work to improve the extension. Check the release page regularly for new versions and additional features.
 
-1. Extension is optimized for minimal performance impact
-2. Uses efficient CSS selectors
-3. Minimal DOM operations
+## 🙋 Frequently Asked Questions
 
-## 📝 License
+### How do I know if the extension is working?
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+You won't see any Shorts on your YouTube homepage or recommended videos. If you do, please check if the extension is enabled.
 
-## 🤝 Contributing
+### Can I use this on mobile browsers?
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report bugs, and suggest features.
+Currently, dm-shorts-blocker is designed for desktop browsers. A mobile version is under consideration.
 
-## 📋 Code of Conduct
+### Is my data safe?
 
-This project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+This extension does not collect personal data. It only works on the YouTube domain to block Short videos.
 
-## 🔒 Security
+## 📝 Contributing
 
-If you discover a security vulnerability, please report it privately. See our [Security Policy](SECURITY.md) for details.
+Although this project is primarily for personal use, contributions are welcome. If you find any issues or have ideas for new features, please open an issue or submit a pull request.
 
-## 🤝 Support
+## 🔗 Resources
 
-If you encounter problems or have suggestions for improvement:
+For more information, tips on how to use, and updates, visit the repository: 
 
-1. Create an Issue in the repository
-2. Describe the problem in detail
-3. Specify browser version and OS
+[GitHub Repository](https://github.com/zainajamal481/dm-shorts-blocker)
 
-## 📋 Version History
+### 📥 Download & Install
 
-See [CHANGELOG.md](CHANGELOG.md) for a complete list of changes and version history.
+Follow the above steps to download and install the extension:
 
-## 🔄 Updates
+[Download dm-shorts-blocker](https://github.com/zainajamal481/dm-shorts-blocker/releases)
 
-To update the extension:
-
-1. Download new version
-2. Remove old extension
-3. Install new version
-4. Settings will be saved automatically
-
-### Current Version: 1.0.0
-
-- ✅ Chrome/Edge support
-- ✅ Firefox support
-- ✅ YouTube Shorts blocking
-- ✅ Element hiding
-- ✅ Statistics tracking
-- ✅ User interface
-
----
-
-**Warning**: This extension is designed to increase productivity and reduce distractions. Use responsibly!
+Enjoy a focused YouTube experience without distractions!
